@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+
+<head>
+     <title>Excel to JSON Demo</title>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.5/xlsx.full.min.js"></script>
+</head>
+<style>
+     table,
+     td,
+     th {
+          border: 1px solid black;
+          padding: 10px;
+     }
+
+     table {
+          border-collapse: collapse;
+          width: 100%;
+     }
+
+     th {
+          height: 50px;
+     }
+</style>
+
+<body>
+     <h1>Bảng điểm E17CQCN01-B</h1>
+     <table>
+          <thead>
+               <th>Số thứ tự</th>
+               <th>Mã sinh viên</th>
+               <th>Họ và tên</th>
+               <th>Lớp</th>
+               <th>Điểm chuyên cần</th>
+               <th>Điểm kiểm tra</th>
+               <th>Điểm thực hành</th>
+               <th>Điểm thi</th>
+               <th>Điểm tổng kết</th>
+               <th>Xếp loại</th>
+          </thead>
+          <tbody id="datalist">
+
+          </tbody>
+     </table>
+     <script>
+          function loadData(url, classname) {
+               var oReq = new XMLHttpRequest();
+               oReq.open("GET", url, true);
+               oReq.responseType = "arraybuffer";
+
+               oReq.onload = function (e) {
+                    var arraybuffer = oReq.response;
+                    /* convert data to binary string */
+                    var data = new Uint8Array(arraybuffer);
+                    var arr = new Array();
+                    for (var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
+                    var bstr = arr.join("");
+
+                    /* Call XLSX */
+                    var workbook = XLSX.read(bstr, {
+                         type: "binary"
+                    });
+                    /* DO SOMETHING WITH workbook HERE */
+                    var first_sheet_name = workbook.SheetNames[0];
+                    /* Get worksheet */
+                    var worksheet = workbook.Sheets[first_sheet_name];
+                    var data = XLSX.utils.sheet_to_json(worksheet, {
+                         raw: true
+                    });
+
+                    var output = data.filter(item => {
+                         return item.__EMPTY_4 === classname;
+                    });
+                    loadUI(output);
+                    // console.log(output);
+               }
+               oReq.send();
+          }
+
+
+
+          function loadUI(data) {
+               var list = document.getElementById("datalist");
+               var template = data.map(item => {
+                    return `<tr>
+                    <td>${item["HỌC VIỆN CÔNG NGHỆ BƯU CHÍNH VIỄN THÔNG"]}</td>
+                    <td>${item.__EMPTY_1}</td>
+                    <td>${item.__EMPTY_2} ${item.__EMPTY_3}</td>
+                    <td>${item.__EMPTY_4}</td>
+                    <td>${item["BẢNG ĐIỂM HỌC PHẦN"]}</td>
+                    <td>${item.__EMPTY_5}</td>
+                    <td>${item.__EMPTY_6}</td> 
+                    <td>${item.__EMPTY_12 === "c" ? "Không đủ điều kiện thi" : item.__EMPTY_12 }</td>
+                    <td>${item.__EMPTY_13}</td>
+                    <td>${item.__EMPTY_14}</td>
+                    </tr>`;
+               })
+               list.innerHTML = template.join("");
+          }
+
+          loadData("OOP.xlsx", "E17CQCN01-B");
+     </script>
+</body>
+
+</html>
