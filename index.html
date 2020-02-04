@@ -1,105 +1,65 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-     <title>Bảng điểm E17CQCN01-B</title>
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.5/xlsx.full.min.js"></script>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+     <title>Document</title>
+     <style>
+          .header {
+               background-color: skyblue;
+               padding: 10px;
+               font-size: 30px;
+          }
+
+          body {
+               margin: 0;
+          }
+
+          .list {
+               padding: 20px;
+          }
+
+          .subject {
+               font-size: 20px;
+          }
+
+          .true {
+               color: green;
+          }
+
+          .footer {
+               padding-left: 40px;
+          }
+     </style>
 </head>
-<style>
-     table,
-     td,
-     th {
-          border: 1px solid black;
-          padding: 10px;
-     }
-
-     table {
-          border-collapse: collapse;
-          width: 100%;
-     }
-
-     th {
-          height: 50px;
-     }
-</style>
 
 <body>
-     <h1>Bảng điểm E17CQCN01-B -môn <span style="color: red">Lập trình hướng đối tượng</span></h1>
-     <table>
-          <thead>
-               <th>Số thứ tự</th>
-               <th>Mã sinh viên</th>
-               <th>Họ và tên</th>
-               <th>Lớp</th>
-               <th>Điểm chuyên cần</th>
-               <th>Điểm kiểm tra</th>
-               <th>Điểm thực hành</th>
-               <th>Điểm thi</th>
-               <th>Điểm tổng kết</th>
-               <th>Xếp loại</th>
-          </thead>
-          <tbody id="datalist">
+     <div class="header">
+          Trang thông tin điểm thi chính thức của lớp E17CQCN1-B
+     </div>
+     <div class="list">
+          <h2>Danh sách các môn thi đã có điểm:</h2>
+          <ul>
+               <li class="subject true">Kỹ thuật số <i>(thi ngày 10/12)</i>: <a href="oop.html">Bảng điểm</a></li>
+               <li class="subject true">Lập trình hướng đối tượng <i>(thi ngày 20/12)</i>: <a href="kts.html">Bảng
+                         điểm</a></li>
+               <li class="subject">Lý thuyết thông tin <i>(thi ngày 24/12)</i></li>
+               <li class="subject">Hệ điều hành <i>(thi ngày 27/12)</i></li>
+               <li class="subject">Kỹ thuật vi xử lý <i>(thi ngày 31/12)</i></li>
+               <li class="subject">Cơ sở dữ liệu <i>(thi ngày 3/1)</i></li>
+          </ul>
+     </div>
 
-          </tbody>
-     </table>
-     <script>
-          function loadData(url, classname) {
-               var oReq = new XMLHttpRequest();
-               oReq.open("GET", url, true);
-               oReq.responseType = "arraybuffer";
-
-               oReq.onload = function (e) {
-                    var arraybuffer = oReq.response;
-                    /* convert data to binary string */
-                    var data = new Uint8Array(arraybuffer);
-                    var arr = new Array();
-                    for (var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
-                    var bstr = arr.join("");
-
-                    /* Call XLSX */
-                    var workbook = XLSX.read(bstr, {
-                         type: "binary"
-                    });
-                    /* DO SOMETHING WITH workbook HERE */
-                    var first_sheet_name = workbook.SheetNames[0];
-                    /* Get worksheet */
-                    var worksheet = workbook.Sheets[first_sheet_name];
-                    var data = XLSX.utils.sheet_to_json(worksheet, {
-                         raw: true
-                    });
-
-                    var output = data.filter(item => {
-                         return item.__EMPTY_4 === classname;
-                    });
-                    loadUI(output);
-                    // console.log(output);
-               }
-               oReq.send();
-          }
-
-
-
-          function loadUI(data) {
-               var list = document.getElementById("datalist");
-               var template = data.map(item => {
-                    return `<tr>
-                    <td>${item["HỌC VIỆN CÔNG NGHỆ BƯU CHÍNH VIỄN THÔNG"]}</td>
-                    <td>${item.__EMPTY_1}</td>
-                    <td>${item.__EMPTY_2} ${item.__EMPTY_3}</td>
-                    <td>${item.__EMPTY_4}</td>
-                    <td>${item["BẢNG ĐIỂM HỌC PHẦN"]}</td>
-                    <td>${item.__EMPTY_5}</td>
-                    <td>${item.__EMPTY_6}</td> 
-                    <td>${item.__EMPTY_12 === "c" ? "Không đủ điều kiện thi" : item.__EMPTY_12 }</td>
-                    <td>${item.__EMPTY_13}</td>
-                    <td>${item.__EMPTY_14}</td>
-                    </tr>`;
-               })
-               list.innerHTML = template.join("");
-          }
-
-          loadData("OOP.xlsx", "E17CQCN01-B");
-     </script>
+     <hr />
+     <footer class="footer">
+          <p>Thông tin được lấy từ nguồn:
+               <a href="http://portal.ptit.edu.vn/ttkt/bang-diem-hoc-phan-thi-lan-1-hoc-ky-1-nam-hoc-2019-2020/">
+                    http://portal.ptit.edu.vn/ttkt/bang-diem-hoc-phan-thi-lan-1-hoc-ky-1-nam-hoc-2019-2020/</a> rồi
+               chuyển đổi về Excel -> JSON bằng SheetJS sau đó lọc kết quả theo lớp bằng map() và filter() của Javascript</p>
+          <p>Github: <a href="https://github.com/hellonewday/e17cn1">Link</a></p>
+     </footer>
 </body>
 
 </html>
