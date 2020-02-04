@@ -71,8 +71,8 @@
                     var output = data.filter(item => {
                          return item.__EMPTY_4 === classname;
                     });
-                    // loadUI(output);
-                    console.log(output);
+                    loadUI(output);
+                    // console.log(output);
                }
                oReq.send();
           }
@@ -98,7 +98,7 @@
                list.innerHTML = template.join("");
           }
 
-          loadData("./dataset/OOP.xlsx", "E17CQCN01-B");
+          loadData("OOP.xlsx", "E17CQCN01-B");
      </script>
 </body>
 
