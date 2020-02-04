@@ -3,7 +3,7 @@
 
 <head>
      <title>Bảng điểm E17CQCN01-B - Kỹ thuật số </title>
-     <script src="xlsx.full.min.js"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.5/xlsx.full.min.js"></script>
 </head>
 <style>
      table,
@@ -43,39 +43,39 @@
           </tbody>
      </table>
      <script>
-          function loadAllData(url, classname) {
-               var oReq = new XMLHttpRequest();
-               oReq.open("GET", url, true);
-               oReq.responseType = "arraybuffer";
+          // function loadAllData(url, classname) {
+          //      var oReq = new XMLHttpRequest();
+          //      oReq.open("GET", url, true);
+          //      oReq.responseType = "arraybuffer";
 
-               oReq.onload = function (e) {
-                    var arraybuffer = oReq.response;
+          //      oReq.onload = function (e) {
+          //           var arraybuffer = oReq.response;
 
-                    var data = new Uint8Array(arraybuffer);
-                    var arr = new Array();
-                    for (var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
-                    var bstr = arr.join("");
+          //           var data = new Uint8Array(arraybuffer);
+          //           var arr = new Array();
+          //           for (var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
+          //           var bstr = arr.join("");
 
 
-                    var workbook = XLSX.read(bstr, {
-                         type: "binary"
-                    });
+          //           var workbook = XLSX.read(bstr, {
+          //                type: "binary"
+          //           });
 
-                    var first_sheet_name = workbook.SheetNames[0];
+          //           var first_sheet_name = workbook.SheetNames[0];
 
-                    var worksheet = workbook.Sheets[first_sheet_name];
-                    var data = XLSX.utils.sheet_to_json(worksheet, {
-                         raw: true
-                    });
+          //           var worksheet = workbook.Sheets[first_sheet_name];
+          //           var data = XLSX.utils.sheet_to_json(worksheet, {
+          //                raw: true
+          //           });
 
-                    var output = data.filter(item => {
-                         return item.__EMPTY_5 === classname;
-                    });
-                    console.log(output);
-                    // loadUI(output);
-               }
-               oReq.send();
-          }
+          //           var output = data.filter(item => {
+          //                return item.__EMPTY_5 === classname;
+          //           });
+          //           console.log(output);
+          //           // loadUI(output);
+          //      }
+          //      oReq.send();
+          // }
 
           
           function loadPureData(filename,classname){
