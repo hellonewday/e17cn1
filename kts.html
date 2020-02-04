@@ -113,9 +113,7 @@
                     var output = data.filter(item => {
                          return item.__EMPTY_5 === classname;
                     });
-                    // console.log(output);
                     loadUI(output);
-                    // console.log(data);
                }
                oReq.send();
 
@@ -141,12 +139,8 @@
                list.innerHTML = template.join("");
           }
 
-          // loadAllData("./datasets/KXDPT.xlsx", "D17CQPT01-B");
-          // loadAllData("./dataset/KTS.xlsx","E17CQCN01-B");
-          // loadAllData("./datasets/CPP.xlsx","D17CQPT01-B");
 
           loadPureData("./dataset/KTS.xlsx", "E17CQCN01-B");
-          // loadID("OOP.xlsx","B17DCCN288");
      </script>
 </body>
 
