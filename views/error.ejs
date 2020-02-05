@@ -1,0 +1,44 @@
+<head>
+    <% if (status == 404) { %>
+    <title>404 Page is missing</title>
+    <% } else { %>
+    <title>500 Internal Server Error</title>
+    <% } %>
+    <title><%= status %></title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap 4 -->
+    <link rel="stylesheet" href="../bootstrap/dist/css/bootstrap.min.css">
+    <script src="../bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../jquery/dist/jquery.slim.min.js"></script>
+</head>
+
+<body class="hold-transition layout-fixed">
+    <!-- Main content -->
+    <div class="wrapper inline-flex">
+        <section class="container">
+            <div class="row">
+                <div class="col-sm-5">
+                    <img class="mx-auto" src="/assets/tee_hee.png" alt="tee hee" style="float: right;">
+                </div>
+                <div class="col pt-5 mt-1">
+                    <h2 class="headline text-info"> <%= status %> </h2>
+                    <h3><i class="fas fa-exclamation-triangle text-info"></i> Oops! Somthing went wrong.</h3>
+                    <p>
+                        We could not find the page you were looking for. Tee hee....
+                    </p>
+                    <p>
+                        Meanwhile, you may <a href="/">return to homepage</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- Control Sidebar -->
+
+</body>
+
+</html>
