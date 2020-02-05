@@ -1,7 +1,7 @@
 function renderTable(name) {
     $("#table-body").empty();
     $("#table-head").empty();
-    var link = name + '.json';
+    var link = "../../dataset/" + name + '.json';
     $.getJSON(link, function (jd) {
         var keys = Object.keys(jd[0]);
         for(let i in keys){
